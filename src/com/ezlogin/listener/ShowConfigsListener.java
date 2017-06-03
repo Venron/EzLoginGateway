@@ -1,5 +1,6 @@
 package com.ezlogin.listener;
 
+import com.ezlogin.dialog.ShowConfigsDialog;
 import com.ezlogin.gui.MainGUI;
 import com.ezlogin.properties.PropReader;
 import com.ezlogin.storage.RuntimeStore;
@@ -27,6 +28,11 @@ public class ShowConfigsListener extends SelectionAdapter {
 
     @Override
     public void widgetSelected(SelectionEvent e) {
+        ShowConfigsDialog d = new ShowConfigsDialog(shell, SWT.APPLICATION_MODAL);
+        d.open();
+    }
+
+    public void widgetSelectedA(SelectionEvent e) {
         String db_address = RuntimeStore.Data.dbAddress;
         int db_port = RuntimeStore.Data.dbPort;
         String db_user = RuntimeStore.Data.dbUsername;

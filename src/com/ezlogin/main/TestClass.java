@@ -5,4 +5,5 @@ package com.ezlogin.main;
  */
 public class TestClass {
     private int number;
+    private int anotherNumber;
 }

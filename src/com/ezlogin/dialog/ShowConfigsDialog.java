@@ -67,8 +67,9 @@ public class ShowConfigsDialog extends Dialog {
         int leftMargin = 15;
         int topMargin = 10;
         int diffTopMargin = 5;
+
         localConfigTitleLbl = new Label(shell, SWT.BOLD);
-        localConfigTitleLbl.setText("Local configurations:");
+        localConfigTitleLbl.setText("Local Configurations");
         localConfigTitleLbl.setFont(textFontBold);
         FormData fdLocalConfigTitleLbl = new FormData();
         fdLocalConfigTitleLbl.left = new FormAttachment(0, leftMargin);
@@ -91,5 +92,21 @@ public class ShowConfigsDialog extends Dialog {
         fdLocalPortTxt.left = new FormAttachment(localPortLbl, 5);
         fdLocalPortTxt.top = new FormAttachment(localConfigTitleLbl, diffTopMargin);
         localPortTxt.setLayoutData(fdLocalPortTxt);
+
+        gwDbTitleLbl = new Label(shell, SWT.BOLD);
+        gwDbTitleLbl.setText("Gateway Database Configurations");
+        gwDbTitleLbl.setFont(textFontBold);
+        FormData fdGwDbTitleLabel = new FormData();
+        fdGwDbTitleLabel.left = new FormAttachment(0, leftMargin);
+        fdGwDbTitleLabel.top = new FormAttachment(localPortLbl, diffTopMargin);
+        gwDbTitleLbl.setLayoutData(fdGwDbTitleLabel);
+
+        gwDbAddressLbl = new Label(shell, SWT.NONE);
+        gwDbAddressLbl.setText("Address: ");
+        gwDbAddressLbl.setFont(textFont);
+        FormData fdGwDbAddressLabel = new FormData();
+        fdGwDbAddressLabel.left = new FormAttachment(0, leftMargin);
+        fdGwDbAddressLabel.top = new FormAttachment(localPortLbl, diffTopMargin);
+        gwDbAddressLbl.setLayoutData(fdGwDbAddressLabel);
     }
 }

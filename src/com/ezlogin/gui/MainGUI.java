@@ -36,10 +36,12 @@ public class MainGUI {
     public static Button stopServerBtn;
 
     // Other
+    private Font textFont;
 
     public MainGUI() {
         createDisplay();
         createShell();
+        createFonts(display);
         createLogWindow();
         createActionButtons();
         createListener();
@@ -90,8 +92,9 @@ public class MainGUI {
 
     private void createActionButtons() {
         showConfigsBtn = new Button(shell, SWT.PUSH);
-        showConfigsBtn.setText("Show configs");
+        showConfigsBtn.setText("Details...");
         showConfigsBtn.setBackground(new Color(display, new RGB(150, 150, 150)));
+        showConfigsBtn.setFont(textFont);
         FormData fdLoadConfigsBtn = new FormData();
         fdLoadConfigsBtn.left = new FormAttachment(0, 15);
         fdLoadConfigsBtn.top = new FormAttachment(logText, 5);
@@ -102,6 +105,7 @@ public class MainGUI {
         startServerBtn = new Button(shell, SWT.PUSH);
         startServerBtn.setText("Start");
         startServerBtn.setBackground(new Color(display, new RGB(150, 150, 150)));
+        startServerBtn.setFont(textFont);
         FormData fdStartServerBtn = new FormData();
         fdStartServerBtn.left = new FormAttachment(showConfigsBtn, 15);
         fdStartServerBtn.top = new FormAttachment(logText, 5);
@@ -112,6 +116,7 @@ public class MainGUI {
         stopServerBtn = new Button(shell, SWT.PUSH);
         stopServerBtn.setText("Stop");
         stopServerBtn.setBackground(new Color(display, new RGB(150, 150, 150)));
+        stopServerBtn.setFont(textFont);
         FormData fdStopServerBtn = new FormData();
         fdStopServerBtn.left = new FormAttachment(startServerBtn, 5);
         fdStopServerBtn.top = new FormAttachment(logText, 5);
@@ -159,5 +164,9 @@ public class MainGUI {
 
     public static void externalLog(String log) {
         logText.append(LogStamp.getStamp(log));
+    }
+
+    private void createFonts(Display display) {
+        textFont = new Font(display, "Segoe UI", 10, SWT.NONE);
     }
 }

@@ -31,6 +31,7 @@ public class StopServerListener extends SelectionAdapter {
                 e1.printStackTrace();
             }
             RuntimeStore.Connection.serverSocket = null;
+            MainGUI.externalLog("Server stopped");
             MessageBox mb = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK);
             mb.setText("Server stopped");
             mb.setMessage("Server has been stopped!");

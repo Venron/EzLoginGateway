@@ -2,6 +2,8 @@ package com.ezlogin.dialog;
 
 import com.ezlogin.storage.RuntimeStore;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
@@ -51,11 +53,11 @@ public class ShowConfigsDialog extends Dialog {
 
     public void open() {
         display = getParent().getDisplay();
-        shell = new Shell(display, SWT.SHELL_TRIM);
+        shell = new Shell(display, SWT.PRIMARY_MODAL | SWT.SHEET);
         shell.setText("Configurations");
         shell.setLayout(new FormLayout());
         createContents(shell);
-        shell.setSize(500, 450);
+        shell.setSize(500, 400);
         Rectangle screenSize = display.getPrimaryMonitor().getBounds();
         shell.setBackground(new Color(display, new RGB(160, 160, 160)));
         shell.setLocation((screenSize.width - shell.getBounds().width) / 2,
@@ -73,6 +75,7 @@ public class ShowConfigsDialog extends Dialog {
         shell.forceFocus();
         Font textFont = new Font(display, "Segoe UI", 12, SWT.NONE);
         Font textFontBold = new Font(display, "Segoe UI", 12, SWT.BOLD);
+        Font buttonFont = new Font(display, "Segoe UI", 10, SWT.NONE);
         int leftMargin = 15;
         int topMargin = 10;
         int diffTopMargin = 5;
@@ -183,7 +186,7 @@ public class ShowConfigsDialog extends Dialog {
 
         gwDbPasswordTxt = new Text(shell, SWT.NONE);
         String cc = "";
-        for(int i = 0; i < RuntimeStore.Data.dbPassword.length(); i++) {
+        for (int i = 0; i < RuntimeStore.Data.dbPassword.length(); i++) {
             cc += "*";
         }
         gwDbPasswordTxt.setText(cc);
@@ -264,21 +267,35 @@ public class ShowConfigsDialog extends Dialog {
         cancelBtn = new Button(shell, SWT.PUSH);
         cancelBtn.setText("Cancel");
         cancelBtn.setBackground(greyLight);
+        cancelBtn.setFont(buttonFont);
         FormData fdCancelBtn = new FormData();
-        fdCancelBtn.right = new FormAttachment(0, leftMargin);
-        fdCancelBtn.bottom = new FormAttachment(0, -5);
+        fdCancelBtn.right = new FormAttachment(100, -10);
+        fdCancelBtn.bottom = new FormAttachment(100, -10);
         fdCancelBtn.height = 32;
         fdCancelBtn.width = 87;
         cancelBtn.setLayoutData(fdCancelBtn);
+        cancelBtn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                shell.dispose();
+            }
+        });
 
         okBtn = new Button(shell, SWT.PUSH);
         okBtn.setText("OK");
         okBtn.setBackground(greyLight);
+        okBtn.setFont(buttonFont);
         FormData fdOkBtn = new FormData();
+        fdOkBtn.right = new FormAttachment(cancelBtn, -5);
+        fdOkBtn.bottom = new FormAttachment(100, -10);
         fdOkBtn.height = 32;
         fdOkBtn.width = 87;
-        fdOkBtn.bottom = new FormAttachment(0, -5);
         okBtn.setLayoutData(fdOkBtn);
-
+        okBtn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                shell.dispose();
+            }
+        });
     }
 }

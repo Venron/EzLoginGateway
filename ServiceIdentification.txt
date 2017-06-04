@@ -1,0 +1,49 @@
+App -> Gateway Server:
+- Registrierung (request)
+- Login (request)
+- Transfer (request) ("Datentransfer")
+
+Gateway Server -> App:
+- Registrierung (response)
+- Login (response)
+- Transfer (response)
+
+Gateway Server -> Authentication Server:
+- Prüfe auf User (request)
+- Initiiere Registrierung (request)
+
+Authentication Server -> Gateway Server:
+- Prüfe auf User (response)
+- Initiiere Registrierung (response)
+
+Gateway Server -> Application Server:
+- Sende Daten (request)
+
+Application Server -> Gateway Server:
+- Sende Daten (response)
+
+Gateway Database:
+- E-Mail
+- Username
+- Session Token
+- Login Time
+- Timeout Time (?)
+- Rolle
+- ...
+
+Authentication Database:
+- E-Mail
+- Username
+- Password Hash
+- Rolle
+- ...
+
+"Verpackung":
+- TransferPacket
+- ExchangePacket
+- ServiceRequest/Response
+- ExchangeUnit
+- CommunicationUnit
+- CommUnit
+
+

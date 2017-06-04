@@ -91,29 +91,32 @@ public class MainGUI {
     private void createActionButtons() {
         showConfigsBtn = new Button(shell, SWT.PUSH);
         showConfigsBtn.setText("Show configs");
+        showConfigsBtn.setBackground(new Color(display, new RGB(150, 150, 150)));
         FormData fdLoadConfigsBtn = new FormData();
         fdLoadConfigsBtn.left = new FormAttachment(0, 15);
         fdLoadConfigsBtn.top = new FormAttachment(logText, 5);
-        fdLoadConfigsBtn.height = 28;
-        fdLoadConfigsBtn.width = 80;
+        fdLoadConfigsBtn.height = 32;
+        fdLoadConfigsBtn.width = 87;
         showConfigsBtn.setLayoutData(fdLoadConfigsBtn);
 
         startServerBtn = new Button(shell, SWT.PUSH);
         startServerBtn.setText("Start");
+        startServerBtn.setBackground(new Color(display, new RGB(150, 150, 150)));
         FormData fdStartServerBtn = new FormData();
         fdStartServerBtn.left = new FormAttachment(showConfigsBtn, 15);
         fdStartServerBtn.top = new FormAttachment(logText, 5);
-        fdStartServerBtn.height = 28;
-        fdStartServerBtn.width = 80;
+        fdStartServerBtn.height = 32;
+        fdStartServerBtn.width = 87;
         startServerBtn.setLayoutData(fdStartServerBtn);
 
         stopServerBtn = new Button(shell, SWT.PUSH);
         stopServerBtn.setText("Stop");
+        stopServerBtn.setBackground(new Color(display, new RGB(150, 150, 150)));
         FormData fdStopServerBtn = new FormData();
         fdStopServerBtn.left = new FormAttachment(startServerBtn, 5);
         fdStopServerBtn.top = new FormAttachment(logText, 5);
-        fdStopServerBtn.height = 28;
-        fdStopServerBtn.width = 80;
+        fdStopServerBtn.height = 32;
+        fdStopServerBtn.width = 87;
         stopServerBtn.setLayoutData(fdStopServerBtn);
     }
 

@@ -2,7 +2,9 @@ package com.ezlogin.dialog;
 
 import com.ezlogin.storage.RuntimeStore;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -37,6 +39,11 @@ public class ShowConfigsDialog extends Dialog {
     private Text auSvPortTxt;
     private Text auSvMasterTokenTxt;
 
+    private Button okBtn;
+    private Button cancelBtn;
+
+    private Color grey = new Color(display, new RGB(160, 160, 160));
+    private Color greyLight = new Color(display, new RGB(150, 150, 150));
 
     public ShowConfigsDialog(Shell shell, int style) {
         super(shell, style);
@@ -48,8 +55,9 @@ public class ShowConfigsDialog extends Dialog {
         shell.setText("Configurations");
         shell.setLayout(new FormLayout());
         createContents(shell);
-        shell.setSize(400, 650);
+        shell.setSize(500, 450);
         Rectangle screenSize = display.getPrimaryMonitor().getBounds();
+        shell.setBackground(new Color(display, new RGB(160, 160, 160)));
         shell.setLocation((screenSize.width - shell.getBounds().width) / 2,
                 (screenSize.height - shell.getBounds().height) / 2);
         shell.open();
@@ -73,6 +81,7 @@ public class ShowConfigsDialog extends Dialog {
         localConfigTitleLbl = new Label(shell, SWT.BOLD);
         localConfigTitleLbl.setText("Local Configurations");
         localConfigTitleLbl.setFont(textFontBold);
+        localConfigTitleLbl.setBackground(grey);
         FormData fdLocalConfigTitleLbl = new FormData();
         fdLocalConfigTitleLbl.left = new FormAttachment(0, leftMargin);
         fdLocalConfigTitleLbl.top = new FormAttachment(0, topMargin);
@@ -81,6 +90,7 @@ public class ShowConfigsDialog extends Dialog {
         localPortLbl = new Label(shell, SWT.NONE);
         localPortLbl.setText("Port: ");
         localPortLbl.setFont(textFont);
+        localPortLbl.setBackground(grey);
         FormData fdLocalPortLbl = new FormData();
         fdLocalPortLbl.left = new FormAttachment(0, leftMargin);
         fdLocalPortLbl.top = new FormAttachment(localConfigTitleLbl, diffTopMargin);
@@ -90,6 +100,7 @@ public class ShowConfigsDialog extends Dialog {
         localPortTxt.setEditable(false);
         localPortTxt.setText(Integer.toString(RuntimeStore.Data.serverPort));
         localPortTxt.setFont(textFont);
+        localPortTxt.setBackground(grey);
         FormData fdLocalPortTxt = new FormData();
         fdLocalPortTxt.left = new FormAttachment(localPortLbl, diffLeftMargin);
         fdLocalPortTxt.top = new FormAttachment(localConfigTitleLbl, diffTopMargin);
@@ -98,6 +109,7 @@ public class ShowConfigsDialog extends Dialog {
         gwDbTitleLbl = new Label(shell, SWT.BOLD);
         gwDbTitleLbl.setText("Gateway Database Configurations");
         gwDbTitleLbl.setFont(textFontBold);
+        gwDbTitleLbl.setBackground(grey);
         FormData fdGwDbTitleLabel = new FormData();
         fdGwDbTitleLabel.left = new FormAttachment(0, leftMargin);
         fdGwDbTitleLabel.top = new FormAttachment(localPortLbl, diffTopMargin);
@@ -106,6 +118,7 @@ public class ShowConfigsDialog extends Dialog {
         gwDbAddressLbl = new Label(shell, SWT.NONE);
         gwDbAddressLbl.setText("Address: ");
         gwDbAddressLbl.setFont(textFont);
+        gwDbAddressLbl.setBackground(grey);
         FormData fdGwDbAddressLabel = new FormData();
         fdGwDbAddressLabel.left = new FormAttachment(0, leftMargin);
         fdGwDbAddressLabel.top = new FormAttachment(gwDbTitleLbl, diffTopMargin);
@@ -115,6 +128,7 @@ public class ShowConfigsDialog extends Dialog {
         gwDbAddressTxt.setEditable(false);
         gwDbAddressTxt.setText(RuntimeStore.Data.dbAddress);
         gwDbAddressTxt.setFont(textFont);
+        gwDbAddressTxt.setBackground(grey);
         FormData fdGwDbAddressTxt = new FormData();
         fdGwDbAddressTxt.left = new FormAttachment(gwDbAddressLbl, diffLeftMargin);
         fdGwDbAddressTxt.top = new FormAttachment(gwDbTitleLbl, diffTopMargin);
@@ -123,6 +137,7 @@ public class ShowConfigsDialog extends Dialog {
         gwDbPortLbl = new Label(shell, SWT.NONE);
         gwDbPortLbl.setText("Port: ");
         gwDbPortLbl.setFont(textFont);
+        gwDbPortLbl.setBackground(grey);
         FormData fdGwDbPortLbl = new FormData();
         fdGwDbPortLbl.left = new FormAttachment(0, leftMargin);
         fdGwDbPortLbl.top = new FormAttachment(gwDbAddressTxt, diffTopMargin);
@@ -132,6 +147,7 @@ public class ShowConfigsDialog extends Dialog {
         gwDbPortTxt.setEditable(false);
         gwDbPortTxt.setText(Integer.toString(RuntimeStore.Data.dbPort));
         gwDbPortTxt.setFont(textFont);
+        gwDbPortTxt.setBackground(grey);
         FormData fdGwDbPortTxt = new FormData();
         fdGwDbPortTxt.left = new FormAttachment(gwDbPortLbl, diffLeftMargin);
         fdGwDbPortTxt.top = new FormAttachment(gwDbAddressTxt, diffTopMargin);
@@ -140,6 +156,7 @@ public class ShowConfigsDialog extends Dialog {
         gwDbUserLbl = new Label(shell, SWT.NONE);
         gwDbUserLbl.setText("User: ");
         gwDbUserLbl.setFont(textFont);
+        gwDbUserLbl.setBackground(grey);
         FormData fdGwDbUserLbl = new FormData();
         fdGwDbUserLbl.left = new FormAttachment(0, leftMargin);
         fdGwDbUserLbl.top = new FormAttachment(gwDbPortLbl, diffTopMargin);
@@ -149,6 +166,7 @@ public class ShowConfigsDialog extends Dialog {
         gwDbUserTxt.setEditable(false);
         gwDbUserTxt.setText(RuntimeStore.Data.dbUsername);
         gwDbUserTxt.setFont(textFont);
+        gwDbUserTxt.setBackground(grey);
         FormData fdGwDbUserTxt = new FormData();
         fdGwDbUserTxt.left = new FormAttachment(gwDbUserLbl, diffLeftMargin);
         fdGwDbUserTxt.top = new FormAttachment(gwDbPortTxt, diffTopMargin);
@@ -157,6 +175,7 @@ public class ShowConfigsDialog extends Dialog {
         gwDbPasswordLbl = new Label(shell, SWT.NONE);
         gwDbPasswordLbl.setText("Password: ");
         gwDbPasswordLbl.setFont(textFont);
+        gwDbPasswordLbl.setBackground(grey);
         FormData fdGwDbPasswordLbl = new FormData();
         fdGwDbPasswordLbl.left = new FormAttachment(0, leftMargin);
         fdGwDbPasswordLbl.top = new FormAttachment(gwDbUserLbl, diffTopMargin);
@@ -170,9 +189,96 @@ public class ShowConfigsDialog extends Dialog {
         gwDbPasswordTxt.setText(cc);
         gwDbPasswordTxt.setFont(textFont);
         gwDbPasswordTxt.setEditable(false);
+        gwDbPasswordTxt.setBackground(grey);
         FormData fdGwDbPasswordText = new FormData();
         fdGwDbPasswordText.left = new FormAttachment(gwDbPasswordLbl, diffLeftMargin);
         fdGwDbPasswordText.top = new FormAttachment(gwDbUserTxt, diffTopMargin);
         gwDbPasswordTxt.setLayoutData(fdGwDbPasswordText);
+
+        auSvTitleLbl = new Label(shell, SWT.NONE);
+        auSvTitleLbl.setText("Authentication Server Configurations");
+        auSvTitleLbl.setFont(textFontBold);
+        auSvTitleLbl.setBackground(grey);
+        FormData fdAuSvTitleLabel = new FormData();
+        fdAuSvTitleLabel.left = new FormAttachment(0, leftMargin);
+        fdAuSvTitleLabel.top = new FormAttachment(gwDbPasswordLbl, diffTopMargin);
+        auSvTitleLbl.setLayoutData(fdAuSvTitleLabel);
+
+        auSvAddressLbl = new Label(shell, SWT.NONE);
+        auSvAddressLbl.setText("Address: ");
+        auSvAddressLbl.setFont(textFont);
+        auSvAddressLbl.setBackground(grey);
+        FormData fdAuSvAddressLbl = new FormData();
+        fdAuSvAddressLbl.left = new FormAttachment(0, leftMargin);
+        fdAuSvAddressLbl.top = new FormAttachment(auSvTitleLbl, diffTopMargin);
+        auSvAddressLbl.setLayoutData(fdAuSvAddressLbl);
+
+        auSvAddressTxt = new Text(shell, SWT.NONE);
+        auSvAddressTxt.setFont(textFont);
+        auSvAddressTxt.setEditable(false);
+        auSvAddressTxt.setText(RuntimeStore.Data.serverAddress);
+        auSvAddressTxt.setBackground(grey);
+        FormData fdAuSvAddressTxt = new FormData();
+        fdAuSvAddressTxt.left = new FormAttachment(auSvAddressLbl, diffLeftMargin);
+        fdAuSvAddressTxt.top = new FormAttachment(auSvTitleLbl, diffTopMargin);
+        auSvAddressTxt.setLayoutData(fdAuSvAddressTxt);
+
+        auSvPortLbl = new Label(shell, SWT.NONE);
+        auSvPortLbl.setFont(textFont);
+        auSvPortLbl.setText("Port: ");
+        auSvPortLbl.setBackground(grey);
+        FormData fdAuSvPortLbl = new FormData();
+        fdAuSvPortLbl.left = new FormAttachment(0, leftMargin);
+        fdAuSvPortLbl.top = new FormAttachment(auSvAddressLbl, diffTopMargin);
+        auSvPortLbl.setLayoutData(fdAuSvPortLbl);
+
+        auSvPortTxt = new Text(shell, SWT.NONE);
+        auSvPortTxt.setEditable(false);
+        auSvPortTxt.setFont(textFont);
+        auSvPortTxt.setText(Integer.toString(RuntimeStore.Data.serverPort));
+        auSvPortTxt.setBackground(grey);
+        FormData fdAuSvPortTxt = new FormData();
+        fdAuSvPortTxt.left = new FormAttachment(auSvPortLbl, diffLeftMargin);
+        fdAuSvPortTxt.top = new FormAttachment(auSvAddressLbl, diffTopMargin);
+        auSvPortTxt.setLayoutData(fdAuSvPortTxt);
+
+        auSvMasterTokenLbl = new Label(shell, SWT.NONE);
+        auSvMasterTokenLbl.setFont(textFont);
+        auSvMasterTokenLbl.setText("Master Token: ");
+        auSvMasterTokenLbl.setBackground(grey);
+        FormData fdAuSvMasterTokenLbl = new FormData();
+        fdAuSvMasterTokenLbl.left = new FormAttachment(0, leftMargin);
+        fdAuSvMasterTokenLbl.top = new FormAttachment(auSvPortLbl, diffTopMargin);
+        auSvMasterTokenLbl.setLayoutData(fdAuSvMasterTokenLbl);
+
+        auSvMasterTokenTxt = new Text(shell, SWT.NONE);
+        auSvMasterTokenTxt.setEditable(false);
+        auSvMasterTokenTxt.setFont(textFont);
+        auSvMasterTokenTxt.setText(RuntimeStore.Data.masterToken);
+        auSvMasterTokenTxt.setBackground(grey);
+        FormData fdAuSvMasterTokenTxt = new FormData();
+        fdAuSvMasterTokenTxt.left = new FormAttachment(auSvMasterTokenLbl, diffLeftMargin);
+        fdAuSvMasterTokenTxt.top = new FormAttachment(auSvPortTxt, diffTopMargin);
+        auSvMasterTokenTxt.setLayoutData(fdAuSvMasterTokenTxt);
+
+        cancelBtn = new Button(shell, SWT.PUSH);
+        cancelBtn.setText("Cancel");
+        cancelBtn.setBackground(greyLight);
+        FormData fdCancelBtn = new FormData();
+        fdCancelBtn.right = new FormAttachment(0, leftMargin);
+        fdCancelBtn.bottom = new FormAttachment(0, -5);
+        fdCancelBtn.height = 32;
+        fdCancelBtn.width = 87;
+        cancelBtn.setLayoutData(fdCancelBtn);
+
+        okBtn = new Button(shell, SWT.PUSH);
+        okBtn.setText("OK");
+        okBtn.setBackground(greyLight);
+        FormData fdOkBtn = new FormData();
+        fdOkBtn.height = 32;
+        fdOkBtn.width = 87;
+        fdOkBtn.bottom = new FormAttachment(0, -5);
+        okBtn.setLayoutData(fdOkBtn);
+
     }
 }

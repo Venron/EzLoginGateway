@@ -1,7 +1,6 @@
 package com.ezlogin.listener;
 
-import com.ezlogin.gui.MainGUI_AS;
-import com.ezlogin.gui.MainGUI_GS;
+import com.ezlogin.gui.MainGUI;
 import com.ezlogin.storage.RuntimeStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -56,7 +55,7 @@ public class StartServerListener extends SelectionAdapter {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
-                        MainGUI_AS.externalLog("Starting on port " + RuntimeStore.Data.listenPort);
+                        MainGUI.externalLog("Starting on port " + RuntimeStore.Data.listenPort);
                         MessageBox mb = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK);
                         mb.setText("Server started");
                         mb.setMessage("Server has been started!");
@@ -74,7 +73,7 @@ public class StartServerListener extends SelectionAdapter {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
-                        MainGUI_GS.externalLog("Port " + RuntimeStore.Data.listenPort + " already in use");
+                        MainGUI.externalLog("Port " + RuntimeStore.Data.listenPort + " already in use");
                     }
                 });
             } catch (SocketException e) {
@@ -106,7 +105,7 @@ public class StartServerListener extends SelectionAdapter {
             Display.getDefault().asyncExec(new Runnable() {
                 @Override
                 public void run() {
-                    MainGUI_GS.externalLog("Received conntection from " + client.getInetAddress().toString());
+                    MainGUI.externalLog("Received conntection from " + client.getInetAddress().toString());
                 }
             });
             try {

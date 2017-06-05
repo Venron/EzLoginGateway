@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EzLogin.iml" filepath="$PROJECT_DIR$/EzLogin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EzLoginGateway.iml" filepath="$PROJECT_DIR$/EzLoginGateway.iml" />
     </modules>
   </component>
 </project>

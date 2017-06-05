@@ -1,5 +1,6 @@
 package com.ezlogin.gui;
 
+import com.ezlogin.gateway_data.JsonGen;
 import com.ezlogin.listener.CleanupListener;
 import com.ezlogin.listener.ShowConfigsListener;
 import com.ezlogin.listener.StartServerListener;

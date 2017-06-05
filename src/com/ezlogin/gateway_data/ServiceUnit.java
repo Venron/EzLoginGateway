@@ -5,5 +5,7 @@ package com.ezlogin.gateway_data;
  */
 public class ServiceUnit {
     private String serviceName;
-    private
+    private String sessionToken;
+    private String payload;
+    private String creationTime;
 }

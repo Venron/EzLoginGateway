@@ -1,26 +1,47 @@
 App -> Gateway Server:
-- Registrierung (request)
-- Login (request)
-- Transfer (request) ("Datentransfer")
+- Registrierung (request) (request_register)
+    - E-Mail
+    - Username
+    - Password Hash
+- Login (request) (request_login)
+    - E-Mail
+    - Password Hash
+- Transfer (request) ("Datentransfer") (request_data)
+    - E-Mail (um Daten einzugrenzen (?))
 
 Gateway Server -> App:
-- Registrierung (response)
-- Login (response)
-- Transfer (response)
+- Registrierung (response) (response_register)
+    - Status
+    - Begründung
+- Login (response) (response_login)
+    - Status
+    - Begründung
+- Transfer (response) (response_data_int)
+    - Status
+    - Begründung
 
 Gateway Server -> Authentication Server:
-- Prüfe auf User (request)
-- Initiiere Registrierung (request)
+- Prüfe auf User (request) (request_check_for_user)
+    - E-Mail
+    - Password Hash
+- Führe Registrierung durch (request) (request_do_register)
+    - E-Mail
+    - Username
+    - Password Hash
 
 Authentication Server -> Gateway Server:
-- Prüfe auf User (response)
-- Initiiere Registrierung (response)
+- Prüfe auf User (response) (response_check_for_user)
+    - Status
+    - Begründung
+- Initiiere Registrierung (response) (response_do_register)
+    - Status
+    - Begründung
 
 Gateway Server -> Application Server:
-- Sende Daten (request)
+- Sende Daten (request) (request_data_int)
 
 Application Server -> Gateway Server:
-- Sende Daten (response)
+- Sende Daten (response) (response_data_ext)
 
 Gateway Database:
 - E-Mail
@@ -46,4 +67,7 @@ Authentication Database:
 - CommunicationUnit
 - CommUnit
 - ServiceUnit
+
+ServiceUnit:
+- Kapselt Datenobject
 

@@ -1,8 +1,6 @@
 package com.ezlogin.listener;
 
 import com.ezlogin.dialog.ShowConfigsDialog;
-import com.ezlogin.gui.MainGUI;
-import com.ezlogin.properties.PropReader;
 import com.ezlogin.storage.RuntimeStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

@@ -1,0 +1,10 @@
+Client loggt sich ein:
+- Client sendet Anfrage in JSON an den Gateway Server mit E-Mail und gehashtem Passwort (nicht MD5)
+- Gateway Server decoded die JSON Request
+- Gateway Server encoded die Request in ein neues JSON Format für den Authentication Server (und sanitized sie evtl.)
+- Gateway Server sendet die Request an den Authentication Server
+- Der Authentication Server schaut in der Datenbank nach den Loginddaten
+- Authentication Server encoded eine Statusnachricht (Login successful/failed etc) und sendet sie an den Gateway Server zurück
+- Gateway Server encoded die Nachricht und decoded sie erneut und sendet sie an den Client weiter
+- request_login (C - GS) -> newDecode (GS) -> request_check_for_user (GS - AS) - checkForUser -> response_check_for_user (AS - GS) -> newDecode (GS) -> response_login (GS - C) -> Ende
+

@@ -7,10 +7,7 @@ import com.ezlogin.listener.StopServerListener;
 import com.ezlogin.log.LogStamp;
 import com.ezlogin.properties.PropReader;
 import com.ezlogin.storage.RuntimeStore;
-import com.google.gson.Gson;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -25,7 +22,7 @@ import java.util.Properties;
 /**
  * Created by marcf on 01.06.2017.
  */
-public class MainGUI {
+public class MainGUI_GS {
     // GUI
     private Display display;
     private Shell shell;
@@ -38,7 +35,7 @@ public class MainGUI {
     // Other
     private Font textFont;
 
-    public MainGUI() {
+    public MainGUI_GS() {
         createDisplay();
         createShell();
         createFonts(display);
@@ -134,30 +131,30 @@ public class MainGUI {
 
     private void startup() {
         PropReader propReader = new PropReader("config.properties");
-        MainGUI.props = propReader.loadProps();
+        MainGUI_GS.props = propReader.loadProps();
         try {
-            RuntimeStore.Data.listenPort = Integer.parseInt(MainGUI.props.getProperty("port")); /*Listen port property*/
+            RuntimeStore.Data.listenPort = Integer.parseInt(MainGUI_GS.props.getProperty("port")); /*Listen port property*/
         } catch (NumberFormatException e) {
             RuntimeStore.Data.listenPort = 3434; /*If the port was e.g. a string use the default port 3434*/
             System.out.println("Invalid listener port. Using default port 3434");
         }
-        RuntimeStore.Data.dbAddress = MainGUI.props.getProperty("db-address");
+        RuntimeStore.Data.dbAddress = MainGUI_GS.props.getProperty("db-address");
         try {
-            RuntimeStore.Data.dbPort = Integer.parseInt(MainGUI.props.getProperty("db-port")); /*DB port property*/
+            RuntimeStore.Data.dbPort = Integer.parseInt(MainGUI_GS.props.getProperty("db-port")); /*DB port property*/
         } catch (NumberFormatException e) {
             RuntimeStore.Data.dbPort = 5432;
             System.out.println("Invalid database port. Using default port 5432");
         }
-        RuntimeStore.Data.dbUsername = MainGUI.props.getProperty("db-user");
-        RuntimeStore.Data.dbPassword = MainGUI.props.getProperty("db-password");
-        RuntimeStore.Data.serverAddress = MainGUI.props.getProperty("server-address");
+        RuntimeStore.Data.dbUsername = MainGUI_GS.props.getProperty("db-user");
+        RuntimeStore.Data.dbPassword = MainGUI_GS.props.getProperty("db-password");
+        RuntimeStore.Data.serverAddress = MainGUI_GS.props.getProperty("server-address");
         try {
-            RuntimeStore.Data.serverPort = Integer.parseInt(MainGUI.props.getProperty("server-port"));
+            RuntimeStore.Data.serverPort = Integer.parseInt(MainGUI_GS.props.getProperty("server-port"));
         } catch (NumberFormatException e) {
             RuntimeStore.Data.serverPort = 3435;
             System.out.println("Invalid authentication server port. Using default port 3435");
         }
-        RuntimeStore.Data.masterToken = MainGUI.props.getProperty("master-token");
+        RuntimeStore.Data.masterToken = MainGUI_GS.props.getProperty("master-token");
         System.out.println("Startup finished");
         logText.append(LogStamp.getStamp("Startup finished"));
     }

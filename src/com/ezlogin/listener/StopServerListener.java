@@ -1,13 +1,12 @@
 package com.ezlogin.listener;
 
-import com.ezlogin.gui.MainGUI;
+import com.ezlogin.gui.MainGUI_GS;
 import com.ezlogin.storage.RuntimeStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.omg.SendingContext.RunTime;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -31,7 +30,7 @@ public class StopServerListener extends SelectionAdapter {
                 e1.printStackTrace();
             }
             RuntimeStore.Connection.serverSocket = null;
-            MainGUI.externalLog("Server stopped");
+            MainGUI_GS.externalLog("Server stopped");
             MessageBox mb = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK);
             mb.setText("Server stopped");
             mb.setMessage("Server has been stopped!");

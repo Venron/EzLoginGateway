@@ -101,7 +101,7 @@ public class ShowConfigsDialog extends Dialog {
 
         localPortTxt = new Text(shell, SWT.NONE);
         localPortTxt.setEditable(false);
-        localPortTxt.setText(Integer.toString(RuntimeStore.Data.serverPort));
+        localPortTxt.setText(Integer.toString(RuntimeStore.Data.listenPort));
         localPortTxt.setFont(textFont);
         localPortTxt.setBackground(grey);
         FormData fdLocalPortTxt = new FormData();

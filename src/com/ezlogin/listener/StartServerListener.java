@@ -1,5 +1,6 @@
 package com.ezlogin.listener;
 
+import com.ezlogin.gui.MainGUI_AS;
 import com.ezlogin.gui.MainGUI_GS;
 import com.ezlogin.storage.RuntimeStore;
 import org.eclipse.swt.SWT;
@@ -55,7 +56,7 @@ public class StartServerListener extends SelectionAdapter {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
-                        MainGUI_GS.externalLog("Starting on port " + RuntimeStore.Data.listenPort);
+                        MainGUI_AS.externalLog("Starting on port " + RuntimeStore.Data.listenPort);
                         MessageBox mb = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK);
                         mb.setText("Server started");
                         mb.setMessage("Server has been started!");

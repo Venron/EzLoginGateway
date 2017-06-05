@@ -69,6 +69,7 @@ public class MainGUI_GS {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private void createLogWindow() {
         this.logText = new Text(shell, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
         logText.setEditable(false);
@@ -87,6 +88,7 @@ public class MainGUI_GS {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private void createActionButtons() {
         showConfigsBtn = new Button(shell, SWT.PUSH);
         showConfigsBtn.setText("Details...");
@@ -130,7 +132,7 @@ public class MainGUI_GS {
     }
 
     private void startup() {
-        PropReader propReader = new PropReader("config.properties");
+        PropReader propReader = new PropReader("config_gs.properties");
         MainGUI_GS.props = propReader.loadProps();
         try {
             RuntimeStore.Data.listenPort = Integer.parseInt(MainGUI_GS.props.getProperty("port")); /*Listen port property*/

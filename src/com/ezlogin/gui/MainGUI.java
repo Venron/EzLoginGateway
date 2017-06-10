@@ -1,6 +1,5 @@
 package com.ezlogin.gui;
 
-import com.ezlogin.gateway_data.JsonGen;
 import com.ezlogin.listener.CleanupListener;
 import com.ezlogin.listener.ShowConfigsListener;
 import com.ezlogin.listener.StartServerListener;
@@ -18,6 +17,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Properties;
 
 /**
@@ -47,6 +48,14 @@ public class MainGUI {
 
     public static void externalLog(String log) {
         logText.append(LogStamp.getStamp(log));
+    }
+
+    public static synchronized boolean sendRequestToAuthenticationServer(String request) {
+        return true;
+    }
+
+    public static synchronized String receiveRequestFromAuthenticationServer() {
+        return "";
     }
 
     private void createDisplay() {
@@ -161,11 +170,36 @@ public class MainGUI {
             System.out.println("Invalid authentication server port. Using default port 3435");
         }
         RuntimeStore.Data.masterToken = MainGUI.props.getProperty("master-token");
+        /*
+        * Call start-up methods
+        * */
+        connectToAuthenticationServer();
+
         System.out.println("Startup finished");
         logText.append(LogStamp.getStamp("Startup finished"));
     }
 
     private void createFonts(Display display) {
         textFont = new Font(display, "Segoe UI", 10, SWT.NONE);
+    }
+
+    private void connectToAuthenticationServer() {
+        String asAddress = RuntimeStore.Data.serverAddress;
+        int asPort = RuntimeStore.Data.serverPort;
+        String masterToken = RuntimeStore.Data.masterToken;
+        if (asAddress.isEmpty() || asPort == 0 || masterToken.isEmpty()) {
+            logText.append(LogStamp.getStamp("Could not connect to Authentication Server. Check the config.properties and try again."));
+        }
+        Socket asSocket = null;
+        try {
+            asSocket = new Socket(asAddress, asPort);
+            System.out.println("Connected to the Authentication Server on " + asAddress + ":" + asPort);
+        } catch (IOException e) {
+            logText.append(LogStamp.getStamp("Error raised when connecting to Authentication Server (" + asAddress + ")"));
+        }
+        if (asSocket != null) {
+            RuntimeStore.Connection.asSocket = asSocket;
+        }
+        System.out.println("asSocket saved to the RuntimeStore.");
     }
 }

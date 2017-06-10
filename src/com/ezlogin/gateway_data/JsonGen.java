@@ -95,12 +95,12 @@ public class JsonGen {
     * Response from the authentication server if the AS has found a corresponding registered user
     * AS -> GS
     * */
-    public static String getJsonUserCheckResponse(String email, String answer, String masterToken) {
+    public static String getJsonUserCheckResponse(String email, boolean found, String masterToken) {
         String action = "response_check_for_user";
         JSONObject o = new JSONObject();
         o.put("action", action);
         o.put("email", email);
-        o.put("answer", answer);
+        o.put("response", found);
         o.put("token", masterToken);
         return o.toJSONString();
     }

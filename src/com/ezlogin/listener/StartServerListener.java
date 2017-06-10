@@ -46,6 +46,15 @@ public class StartServerListener extends SelectionAdapter {
         serverListener.start();
     }
 
+    private void logToUiThread(String msg) {
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                MainGUI.externalLog(msg);
+            }
+        });
+    }
+
     /*Inner class that listens for new connections*/
     private class ServerListener extends Thread {
         private int serverPort;
@@ -138,7 +147,7 @@ public class StartServerListener extends SelectionAdapter {
                             }
                         });
                     }
-                    if(o == null) {
+                    if (o == null) {
                         logToUiThread("Error at parsing client JSON request (" + client.getInetAddress() + ")");
                     }
                     String action = (String) o.get("action");
@@ -147,12 +156,11 @@ public class StartServerListener extends SelectionAdapter {
                     /*
                     * Login request from the Client
                     * */
-                    if(action.equals(RuntimeStore.ActionTypes.REQUEST_LOGIN)) {
+                    if (action.equals(RuntimeStore.ActionTypes.REQUEST_LOGIN)) {
                         String email = (String) o.get("email");
                         logToUiThread("Sending login request for user '" + email + "'");
                         /*Send request_check_for_user JSON request to the AS*/
                     }
-
                 }
             } catch (IOException e) {
                 logToUiThread("Error occured at reading data from client (" + client.getInetAddress() + ")");
@@ -164,14 +172,5 @@ public class StartServerListener extends SelectionAdapter {
                 e.printStackTrace();
             }
         }
-    }
-
-    private void logToUiThread(String msg) {
-        Display.getDefault().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                MainGUI.externalLog(msg);
-            }
-        });
     }
 }

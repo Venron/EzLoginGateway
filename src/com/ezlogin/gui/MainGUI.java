@@ -163,10 +163,6 @@ public class MainGUI {
         RuntimeStore.Data.masterToken = MainGUI.props.getProperty("master-token");
         System.out.println("Startup finished");
         logText.append(LogStamp.getStamp("Startup finished"));
-        logText.append(LogStamp.getStamp("JsonGen.getJsonClientLogin=" + JsonGen.getJsonClientLogin("clientEmail", "clientHash", "sessionToken")));
-        logText.append(LogStamp.getStamp("JsonGen.getJsonRequestUserValidation=" + JsonGen.getJsonRequestUserValidation(JsonGen.getJsonClientLogin("clientEmail", "clientHash", "clientToken"), "clientMail", "clientHash", "masterToken")));
-        logText.append(LogStamp.getStamp("JsonGen.getJsonUserCheckResponse=" + JsonGen.getJsonUserCheckResponse("clientEmail", "checkAnswer", "masterToken")));
-        logText.append(LogStamp.getStamp("JsonGen.getJsonUserLoginResponse=" + JsonGen.getJsonUserLoginResponse("clientMail", true, "sessionToken")));
     }
 
     private void createFonts(Display display) {

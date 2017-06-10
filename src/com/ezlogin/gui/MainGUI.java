@@ -24,15 +24,14 @@ import java.util.Properties;
  * Created by marcf on 01.06.2017.
  */
 public class MainGUI {
+    public static Button startServerBtn;
+    public static Button stopServerBtn;
+    private static Text logText;
+    private static Properties props;
     // GUI
     private Display display;
     private Shell shell;
-    private static Text logText;
     private Button showConfigsBtn;
-    private static Properties props;
-    public static Button startServerBtn;
-    public static Button stopServerBtn;
-
     // Other
     private Font textFont;
 
@@ -44,6 +43,10 @@ public class MainGUI {
         createActionButtons();
         createListener();
         startup();
+    }
+
+    public static void externalLog(String log) {
+        logText.append(LogStamp.getStamp(log));
     }
 
     private void createDisplay() {
@@ -160,10 +163,10 @@ public class MainGUI {
         RuntimeStore.Data.masterToken = MainGUI.props.getProperty("master-token");
         System.out.println("Startup finished");
         logText.append(LogStamp.getStamp("Startup finished"));
-    }
-
-    public static void externalLog(String log) {
-        logText.append(LogStamp.getStamp(log));
+        logText.append(LogStamp.getStamp("JsonGen.getJsonClientLogin=" + JsonGen.getJsonClientLogin("clientEmail", "clientHash", "sessionToken")));
+        logText.append(LogStamp.getStamp("JsonGen.getJsonRequestUserValidation=" + JsonGen.getJsonRequestUserValidation(JsonGen.getJsonClientLogin("clientEmail", "clientHash", "clientToken"), "clientMail", "clientHash", "masterToken")));
+        logText.append(LogStamp.getStamp("JsonGen.getJsonUserCheckResponse=" + JsonGen.getJsonUserCheckResponse("clientEmail", "checkAnswer", "masterToken")));
+        logText.append(LogStamp.getStamp("JsonGen.getJsonUserLoginResponse=" + JsonGen.getJsonUserLoginResponse("clientMail", true, "sessionToken")));
     }
 
     private void createFonts(Display display) {

@@ -35,7 +35,7 @@ public class StartServerListener extends SelectionAdapter {
 
     @Override
     public void widgetSelected(SelectionEvent e) {
-        if (RuntimeStore.Connection.serverSocket != null) {
+        if (RuntimeStore.Connection.serverSocket != null) { /*Check if the server has been started before*/
             MessageBox mb = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
             mb.setText("Server already running");
             mb.setMessage("Server is already running!");
@@ -99,10 +99,40 @@ public class StartServerListener extends SelectionAdapter {
                     }
                 }
             }
+
+            /*
+            * Connect to authentication server
+            * */
+            connectToAuthenticationServer();
+            System.out.println("Connected to Authentication Server. (" + RuntimeStore.Connection.asSocket.getInetAddress() + ":" + RuntimeStore.Connection.asSocket.getPort());
+        }
+
+        /*
+        * Open a socket to the authentication server that can be used for later communication
+        * */
+        private void connectToAuthenticationServer() {
+            String asAddress = RuntimeStore.Data.serverAddress;
+            int asPort = RuntimeStore.Data.serverPort;
+            String masterToken = RuntimeStore.Data.masterToken;
+            if (asAddress.isEmpty() || asPort == 0 || masterToken.isEmpty()) {
+                MainGUI.externalLog("Could not connect to Authentication Server. Check the config.properties and try again.");
+            }
+            Socket asSocket = null;
+            try {
+                asSocket = new Socket(asAddress, asPort);
+                System.out.println("Connected to the Authentication Server on " + asAddress + ":" + asPort);
+            } catch (IOException e) {
+                MainGUI.externalLog("Error raised when connecting to Authentication Server (" + asAddress + ")");
+            }
+            if (asSocket != null) {
+                RuntimeStore.Connection.asSocket = asSocket;
+            }
+            System.out.println("asSocket saved to the RuntimeStore.");
         }
     }
 
     /*Inner handler class for incoming connections*/
+    // TODO: use try with resources on the stream objects
     private class ServerThread extends Thread {
         private Socket client;
         private PrintWriter out;

@@ -50,14 +50,6 @@ public class MainGUI {
         logText.append(LogStamp.getStamp(log));
     }
 
-    public static synchronized boolean sendRequestToAuthenticationServer(String request) {
-        return true;
-    }
-
-    public static synchronized String receiveRequestFromAuthenticationServer() {
-        return "";
-    }
-
     private void createDisplay() {
         this.display = new Display();
     }
@@ -97,7 +89,7 @@ public class MainGUI {
 
     private void fill() {
         for (int i = 0; i < 40; i++) {
-            logText.append(LogStamp.getStamp("Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet " + i));
+            logMessage("Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet " + i);
         }
     }
 
@@ -173,33 +165,16 @@ public class MainGUI {
         /*
         * Call start-up methods
         * */
-        connectToAuthenticationServer();
 
         System.out.println("Startup finished");
-        logText.append(LogStamp.getStamp("Startup finished"));
+        logMessage("Startup finished");
     }
 
     private void createFonts(Display display) {
         textFont = new Font(display, "Segoe UI", 10, SWT.NONE);
     }
 
-    private void connectToAuthenticationServer() {
-        String asAddress = RuntimeStore.Data.serverAddress;
-        int asPort = RuntimeStore.Data.serverPort;
-        String masterToken = RuntimeStore.Data.masterToken;
-        if (asAddress.isEmpty() || asPort == 0 || masterToken.isEmpty()) {
-            logText.append(LogStamp.getStamp("Could not connect to Authentication Server. Check the config.properties and try again."));
-        }
-        Socket asSocket = null;
-        try {
-            asSocket = new Socket(asAddress, asPort);
-            System.out.println("Connected to the Authentication Server on " + asAddress + ":" + asPort);
-        } catch (IOException e) {
-            logText.append(LogStamp.getStamp("Error raised when connecting to Authentication Server (" + asAddress + ")"));
-        }
-        if (asSocket != null) {
-            RuntimeStore.Connection.asSocket = asSocket;
-        }
-        System.out.println("asSocket saved to the RuntimeStore.");
+    private void logMessage(String msg) {
+        logText.append(LogStamp.getStamp(msg));
     }
 }

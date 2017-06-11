@@ -32,6 +32,7 @@ public class RuntimeStore {
         /*
         * Socket to communicate with the Authentication Server
         * */
+        public static ServerSocket serverSocket;
         public static Socket asSocket;
     }
     public static class ActionTypes {

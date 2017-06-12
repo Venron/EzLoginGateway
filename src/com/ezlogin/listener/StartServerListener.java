@@ -1,5 +1,6 @@
 package com.ezlogin.listener;
 
+import com.ezlogin.gateway.ClientConnection;
 import com.ezlogin.gui.MainGUI;
 import com.ezlogin.storage.RuntimeStore;
 import org.eclipse.swt.SWT;
@@ -8,14 +9,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import sun.plugin2.message.Message;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -77,12 +73,28 @@ public class StartServerListener extends SelectionAdapter {
                         mb.open();
                     }
                 });
+
+                /*
+                * Connect to authentication server
+                * */
+                connectToAuthenticationServer();
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        MainGUI.externalLog("Connected to Authentication Server.");
+                        MessageBox mb = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK);
+                        mb.setText("Authentication Server Connection");
+                        mb.setMessage("Connected to Authentication Server");
+                        mb.open();
+                    }
+                });
+
                 serverSocket = new ServerSocket(RuntimeStore.Data.listenPort);
                 RuntimeStore.Connection.serverSocket = serverSocket; /*Save ServerSocket*/
                 while (true) {
                     Socket client = serverSocket.accept();
-                    ServerThread serverThread = new ServerThread(client);
-                    serverThread.start();
+                    ClientConnection clientConnection = new ClientConnection(client);
+                    clientConnection.start();
                 }
             } catch (BindException e) {
                 logToUiThread("Port " + RuntimeStore.Data.listenPort + " already in use.");
@@ -99,11 +111,6 @@ public class StartServerListener extends SelectionAdapter {
                     }
                 }
             }
-
-            /*
-            * Connect to authentication server
-            * */
-            connectToAuthenticationServer();
             System.out.println("Connected to Authentication Server. (" + RuntimeStore.Connection.asSocket.getInetAddress() + ":" + RuntimeStore.Connection.asSocket.getPort());
         }
 
@@ -128,79 +135,6 @@ public class StartServerListener extends SelectionAdapter {
                 RuntimeStore.Connection.asSocket = asSocket;
             }
             System.out.println("asSocket saved to the RuntimeStore.");
-        }
-    }
-
-    /*Inner handler class for incoming connections*/
-    // TODO: use try with resources on the stream objects
-    private class ServerThread extends Thread {
-        private Socket client;
-        private PrintWriter out;
-        private BufferedReader in;
-
-        public ServerThread(Socket client) {
-            this.client = client;
-        }
-
-        @Override
-        public void run() {
-            /*Get the streams*/
-            try {
-                out = new PrintWriter(client.getOutputStream(), true);
-            } catch (IOException e) {
-                logToUiThread("Failed to receive data from client (Exception at PrintWriter). (" + client.getInetAddress() + ")");
-                return; /*Stop thread execution*/
-            }
-            try {
-                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            } catch (IOException e) {
-                logToUiThread("Failed to receive data from client (Exception at BufferedReader). (" + client.getInetAddress() + ")");
-                return; /*Stop thread execution*/
-            }
-
-            logToUiThread("New connection (" + client.getInetAddress().toString() + ")");
-
-            String request = "";
-
-            try {
-                while ((request = in.readLine()) != null) {
-                    /*Parse the JSON message from the client*/
-                    JSONParser p = new JSONParser();
-                    JSONObject o = null;
-                    try {
-                        o = (JSONObject) p.parse(request);
-                    } catch (ParseException e) {
-                        Display.getDefault().asyncExec(new Runnable() {
-                            @Override
-                            public void run() {
-                                MainGUI.externalLog("Error at parsing request from client (" + client.getInetAddress() + ")");
-                            }
-                        });
-                    }
-                    if (o == null) {
-                        logToUiThread("Error at parsing client JSON request (" + client.getInetAddress() + ")");
-                    }
-                    String action = (String) o.get("action");
-                    /*Evaluate the received request from the client*/
-
-                    /*
-                    * Login request from the Client
-                    * */
-                    if (action.equals(RuntimeStore.ActionTypes.REQUEST_LOGIN)) {
-                        String email = (String) o.get("email");
-                        logToUiThread("Sending login request for user '" + email + "'");
-                        /*Send request_check_for_user JSON request to the AS*/
-                    }
-                }
-            } catch (IOException e) {
-                logToUiThread("Error occured at reading data from client (" + client.getInetAddress() + ")");
-            }
-
-            try {
-                client.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

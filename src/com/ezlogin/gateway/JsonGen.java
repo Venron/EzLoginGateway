@@ -1,4 +1,4 @@
-package com.ezlogin.gateway_data;
+package com.ezlogin.gateway;
 
 import com.sun.istack.internal.NotNull;
 import org.json.simple.JSONObject;
@@ -28,10 +28,10 @@ public class JsonGen {
         return JsonGen.getTime() + log + "\n";
     }
 
-    /*
-    * JSON Request from Client
-    * Client -> GS
-    * */
+    /**
+     * JSON Request from Client <p>
+     * Client -> GS
+     */
     public static String getJsonClientLogin(String email, String hash, String sToken) {
         String action = "request_login";
         JSONObject o = new JSONObject();
@@ -42,11 +42,11 @@ public class JsonGen {
         return o.toJSONString();
     }
 
-    /*
-    * User login request gets transformed
-    * Replace the session token with the master token for the communication between GS and AS
-    * GS -> GS
-    * */
+    /**
+     * User login request gets transformed
+     * Replace the session token with the master token for the communication between GS and AS <p>
+     * GS -> GS
+     */
     private static String getJsonClientLoginGateway(String clientRequest, String masterToken) {
         String action = "request_login";
         String email;
@@ -70,10 +70,10 @@ public class JsonGen {
         return ob.toJSONString();
     }
 
-    /*
-    * Request to authentication server to check for the specified user
-    * GS -> AS
-    * */
+    /**
+     * Request to authentication server to check for the specified user <p>
+     * GS -> AS
+     */
     public static String getJsonRequestUserValidation(String clientRequest, String email, String hash, String masterToken) {
         JSONParser p = new JSONParser();
         JSONObject ob = null;
@@ -91,10 +91,10 @@ public class JsonGen {
         return o.toJSONString();
     }
 
-    /*
-    * Response from the authentication server if the AS has found a corresponding registered user
-    * AS -> GS
-    * */
+    /**
+     * Response from the authentication server if the AS has found a corresponding registered user <p>
+     * AS -> GS
+     */
     public static String getJsonUserCheckResponse(String email, boolean found, String masterToken) {
         String action = "response_check_for_user";
         JSONObject o = new JSONObject();
@@ -105,17 +105,17 @@ public class JsonGen {
         return o.toJSONString();
     }
 
-    /*
-    * Response from the GS to the Client with either login granted or login denied
-    * GS -> Client
-    * */
+    /**
+     * Response from the GS to the Client with either login granted or login denied <p>
+     * GS -> Client
+     */
     public static String getJsonUserLoginResponse(String email, boolean found, String sToken) {
         String action = "response_login";
         JSONObject o = new JSONObject();
         o.put("action", action);
         o.put("email", email);
         o.put("token", sToken);
-        if(found) {
+        if (found) {
             o.put("response", JsonGen.RESPONSE_USER_FOUND);
         } else {
             o.put("response", JsonGen.RESPONSE_USER_NOT_FOUND);

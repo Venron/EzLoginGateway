@@ -1,4 +1,4 @@
-package com.ezlogin.gateway_data;
+package com.ezlogin.gateway;
 
 /**
  * Created by marcf on 04.06.2017.
